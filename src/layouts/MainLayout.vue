@@ -48,7 +48,7 @@
 
 <script setup>
 import { ref } from 'vue'
-import { ROTAS } from 'src/router/routes'
+import { ROUTE_NAMES } from 'src/router/routes'
 import Navigation from '../components/home/NavigationState.vue'
 
 const leftDrawerOpen = ref(false)
@@ -75,19 +75,18 @@ const aboutMeList = [
     icon: 'photo_camera',
     link: 'https://www.instagram.com/dssbrito/',
   },
-  {
-    title: 'Gmail',
-    icon: 'attach_email',
-    link: 'dionatas.santtos@gmail.com',
-  },
 ]
 
-// Navegação interna por objeto de rota (corrigido)
 const navigationPages = [
   {
     title: 'Home Page',
     icon: 'house',
-    link: { name: ROTAS.home.name },
+    link: { name: ROUTE_NAMES.home },
+  },
+  {
+    title: 'Product Page',
+    icon: 'store',
+    link: { name: ROUTE_NAMES.product },
   },
 ]
 </script>

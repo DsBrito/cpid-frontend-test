@@ -1,12 +1,22 @@
+export const ROUTE_NAMES = {
+  home: 'home',
+  product: 'product',
+}
+
 export const ROTAS = {
   home: {
     path: '/',
-    component: () => import('layouts/MainLayout.vue'), // o layout
+    component: () => import('layouts/MainLayout.vue'),
     children: [
       {
         path: '',
-        name: 'home',
+        name: ROUTE_NAMES.home,
         component: () => import('../pages/HomePage.vue'),
+      },
+      {
+        path: 'product',
+        name: ROUTE_NAMES.product,
+        component: () => import('../pages/ProductPage.vue'),
       },
     ],
   },
