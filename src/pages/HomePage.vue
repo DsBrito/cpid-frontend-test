@@ -15,7 +15,7 @@
           rounded
           color="primary"
           size="lg"
-          to="{ name: 'home' }"
+          @click="goToProductPage()"
         />
         <q-btn
           class="full-width"
@@ -23,7 +23,7 @@
           rounded
           color="primary"
           size="lg"
-          to="{ name: 'home' }"
+          :to="{ name: 'home' }"
         />
         <q-btn
           class="full-width"
@@ -31,7 +31,7 @@
           rounded
           color="primary"
           size="lg"
-          to="{ name: 'home' }"
+          :to="{ name: 'home' }"
         />
       </div>
     </div>
@@ -39,7 +39,24 @@
 </template>
 
 <script setup>
-//
+import { ROUTE_NAMES } from 'src/router/routes'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+
+const goToProductPage = () => {
+  // Navigate to the product page
+  router.push({ name: ROUTE_NAMES.product })
+}
+
+// const goToAttProductPage = () => {
+//   // Navigate to the product page
+//   router.push({ name: ROUTE_NAMES.attproduct })
+// }
+// const goToDashboardPage = () => {
+//   // Navigate to the product page
+//   router.push({ name: ROUTE_NAMES.dashboard })
+// }
 </script>
 <style scoped>
 .home-page {
@@ -48,7 +65,6 @@
   position: relative;
   overflow: hidden;
   color: #ffff;
-  font-family: 'Georgia', serif;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
