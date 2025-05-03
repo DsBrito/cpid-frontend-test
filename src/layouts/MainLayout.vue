@@ -11,7 +11,9 @@
           aria-label="Menu"
           class="q-mr-sm"
         />
-        <q-toolbar-title class="text-h6 text-weight-bold"> CPID Frontend Test </q-toolbar-title>
+        <q-toolbar-title class="text-h6 text-weight-bold">
+          CPID Frontend Test - DsBrito
+        </q-toolbar-title>
       </q-toolbar>
     </q-header>
 
@@ -87,6 +89,11 @@ const navigationPages = [
     title: 'Product Page',
     icon: 'store',
     link: { name: ROUTE_NAMES.product },
+  },
+  {
+    title: 'Movement Page',
+    icon: 'sync_alt',
+    link: { name: ROUTE_NAMES.movement },
   },
 ]
 </script>

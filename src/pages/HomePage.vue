@@ -23,7 +23,7 @@
           rounded
           color="primary"
           size="lg"
-          :to="{ name: 'home' }"
+          @click="goToMovementPage()"
         />
         <q-btn
           class="full-width"
@@ -45,14 +45,12 @@ import { useRouter } from 'vue-router'
 const router = useRouter()
 
 const goToProductPage = () => {
-  // Navigate to the product page
   router.push({ name: ROUTE_NAMES.product })
 }
 
-// const goToAttProductPage = () => {
-//   // Navigate to the product page
-//   router.push({ name: ROUTE_NAMES.attproduct })
-// }
+const goToMovementPage = () => {
+  router.push({ name: ROUTE_NAMES.movement })
+}
 // const goToDashboardPage = () => {
 //   // Navigate to the product page
 //   router.push({ name: ROUTE_NAMES.dashboard })
