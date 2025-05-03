@@ -95,6 +95,11 @@ const navigationPages = [
     icon: 'sync_alt',
     link: { name: ROUTE_NAMES.movement },
   },
+  {
+    title: 'Dashboard Page',
+    icon: 'analytics',
+    link: { name: ROUTE_NAMES.dashboard },
+  },
 ]
 </script>
 
