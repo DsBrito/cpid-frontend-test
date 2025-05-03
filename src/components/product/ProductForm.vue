@@ -33,7 +33,7 @@
         <div class="col-12 col-md-4">
           <q-input
             v-model.number="formData.price"
-            label="Valor *"
+            label="Preço *"
             type="number"
             filled
             prefix="R$"
