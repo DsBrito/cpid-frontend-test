@@ -100,7 +100,7 @@
   </div>
 </template>
 <script setup>
-import { ref, defineProps, watch, computed } from 'vue'
+import { ref, watch, computed } from 'vue'
 
 const props = defineProps({
   rows: {
@@ -133,7 +133,7 @@ const dataModel = {
   id: '',
   name: '',
   description: '',
-  quantity: 0,
+  amount: 0,
   price: 0,
   code: '',
   category: '',
@@ -141,21 +141,23 @@ const dataModel = {
   supplier: '',
   expirationDate: '',
   manufactureDate: '',
+  currentDate: '',
 }
 
 const fieldLabels = {
   id: 'ID',
   name: 'Nome',
   description: 'Descrição',
-  quantity: 'Quantidade',
+  amount: 'Quantidade',
   price: 'Preço',
   value: 'Valor',
   code: 'Código',
   category: 'Categoria',
   brand: 'Marca',
   supplier: 'Fornecedor',
-  expirationDate: 'Validade',
-  manufactureDate: 'Fabricação',
+  expirationDate: 'Data Validade',
+  manufactureDate: 'Data Fabricação',
+  currentDate: 'Data Cadastro',
 }
 
 const allColumns = Object.keys(dataModel).map((key) => ({

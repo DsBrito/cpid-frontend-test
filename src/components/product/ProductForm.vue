@@ -1,10 +1,11 @@
 <template>
   <q-card class="q-pa-md no-box-shadow no-border-radius">
+    <div class="text-h5 q-mb-md">Cadastro de Produtos no Estoque</div>
     <q-form @submit.prevent="onSubmit" @reset="onReset" class="q-gutter-md">
-      <div class="row q-col-gutter-md">
-        <div class="col-12 col-md-6">
+      <div class="row q-col-gutter-sm">
+        <div class="col-12">
           <q-input
-            v-model="name"
+            v-model="formData.name"
             label="Nome do Produto *"
             filled
             :rules="[(val) => !!val || 'Nome é obrigatório']"
@@ -12,18 +13,13 @@
           />
         </div>
 
-        <div class="col-12 col-md-6">
-          <q-input
-            v-model="code"
-            label="Código *"
-            filled
-            :rules="[(val) => !!val || 'Código é obrigatório']"
-          />
+        <div class="col-12 col-md-4">
+          <q-input v-model="formData.code" label="Código " filled disable readonly />
         </div>
 
         <div class="col-12 col-md-4">
           <q-input
-            v-model.number="quantity"
+            v-model.number="formData.amount"
             label="Quantidade *"
             type="number"
             filled
@@ -36,7 +32,7 @@
 
         <div class="col-12 col-md-4">
           <q-input
-            v-model.number="price"
+            v-model.number="formData.price"
             label="Valor *"
             type="number"
             filled
@@ -45,13 +41,12 @@
               (val) => (val !== null && val !== undefined) || 'Valor é obrigatório',
               (val) => val > 0 || 'Valor deve ser maior que 0',
             ]"
-            @update:model-value="updatePrice"
           />
         </div>
 
         <div class="col-12 col-md-4">
           <q-select
-            v-model="category"
+            v-model="formData.category"
             :options="categoryOptions"
             label="Categoria *"
             filled
@@ -60,18 +55,26 @@
             :rules="[(val) => !!val || 'Categoria é obrigatória']"
           />
         </div>
-
-        <!-- Informações adicionais -->
-        <div class="col-12 col-md-6">
-          <q-input v-model="brand" label="Marca" filled />
+        <div class="col-12 col-md-4">
+          <q-input v-model="formData.brand" label="Marca" filled />
         </div>
 
-        <div class="col-12 col-md-6">
-          <q-input v-model="supplier" label="Fornecedor" filled />
+        <div class="col-12 col-md-4">
+          <q-input v-model="formData.supplier" label="Fornecedor" filled />
         </div>
-        <div class="col-12 col-md-6">
+        <div class="col-12 col-md-4">
           <q-input
-            v-model="manufactureDate"
+            v-model="formData.currentDate"
+            type="date"
+            label="Data do Cadastro"
+            filled
+            disable
+            readonly
+          />
+        </div>
+        <div class="col-12 col-md-4">
+          <q-input
+            v-model="formData.manufactureDate"
             label="Data de Fabricação"
             type="date"
             filled
@@ -85,12 +88,18 @@
           />
         </div>
 
-        <div class="col-12 col-md-6">
-          <q-input v-model="expirationDate" label="Data de Validade" type="date" filled />
+        <div class="col-12 col-md-4">
+          <q-input v-model="formData.expirationDate" label="Data de Validade" type="date" filled />
         </div>
 
         <div class="col-12">
-          <q-input v-model="description" label="Descrição" type="textarea" filled autogrow />
+          <q-input
+            v-model="formData.description"
+            label="Descrição"
+            type="textarea"
+            filled
+            autogrow
+          />
         </div>
       </div>
 
@@ -98,7 +107,7 @@
 
       <div class="row justify-end q-gutter-sm">
         <q-btn label="Limpar" type="reset" color="grey-7" flat icon="clear_all" />
-        <q-btn label="Salvar" type="submit" color="primary" icon="save" :loading="saving" />
+        <q-btn label="Salvar" type="submit" color="primary" icon="save" />
       </div>
     </q-form>
   </q-card>
@@ -106,23 +115,25 @@
 
 <script setup>
 import { addNewData } from '../../utils/product-storage'
-import { ref, defineEmits } from 'vue'
-import { Loading, Notify } from 'quasar'
+import { ref } from 'vue'
+import { Loading, Notify, QSpinnerGears } from 'quasar'
 
 const emit = defineEmits(['dataUpdated'])
 const nameRef = ref(null)
 
-const name = ref('')
-const description = ref('')
-const quantity = ref('')
-const code = ref('')
-const category = ref('')
-const price = ref('')
-const brand = ref('')
-const supplier = ref('')
-const expirationDate = ref('')
-const manufactureDate = ref('')
-
+const formData = ref({
+  name: '',
+  description: '',
+  amount: '',
+  code: Date.now(),
+  category: '',
+  price: '',
+  brand: '',
+  supplier: '',
+  expirationDate: '',
+  manufactureDate: '',
+  currentDate: getCurrentDate(),
+})
 // Opções para o select de categorias
 const categoryOptions = [
   { label: 'Eletrônicos', value: 'electronics' },
@@ -135,20 +146,25 @@ const categoryOptions = [
 const onSubmit = () => {
   try {
     const data = {
-      name: name.value,
-      description: description.value,
-      quantity: quantity.value,
-      price: price.value,
-      code: code.value,
-      category: category.value,
-      brand: brand.value,
-      supplier: supplier.value,
-      manufactureDate: manufactureDate.value,
-      expirationDate: expirationDate.value,
+      name: formData.value.name,
+      description: formData.value.description,
+      amount: formData.value.amount,
+      price: formData.value.price,
+      code: formData.value.code,
+      category: formData.value.category,
+      brand: formData.value.brand,
+      supplier: formData.value.supplier,
+      manufactureDate: formData.value.manufactureDate,
+      expirationDate: formData.value.expirationDate,
+      currentDate: formData.value.currentDate,
     }
     addNewData('dataCompany', data)
     emit('dataUpdated')
-
+    Loading.show({
+      message: 'Cadastrando produto...',
+      spinner: QSpinnerGears,
+      spinnerColor: 'white',
+    })
     // Mostra mensagem de sucesso
     Notify.create({
       color: 'positive',
@@ -174,21 +190,33 @@ const onSubmit = () => {
 }
 
 const onReset = () => {
-  name.value = ''
-  description.value = ''
-  quantity.value = ''
-  price.value = ''
-  code.value = ''
-  category.value = ''
-  brand.value = ''
-  supplier.value = ''
-  expirationDate.value = ''
-  manufactureDate.value = ''
+  formData.value = {
+    name: '',
+    description: '',
+    amount: '',
+    price: '',
+    code: Date.now(),
+    category: '',
+    brand: '',
+    supplier: '',
+    expirationDate: '',
+    manufactureDate: '',
+    currentDate: getCurrentDate(),
+  }
 
   // Foca o primeiro campo após ocorrer o reset
   if (nameRef.value) {
     nameRef.value.focus()
   }
+}
+
+function getCurrentDate() {
+  // Retorna a data atual no formato YYYY-MM-DD para o input de data
+  const now = new Date()
+  const year = now.getFullYear()
+  const month = String(now.getMonth() + 1).padStart(2, '0')
+  const day = String(now.getDate()).padStart(2, '0')
+  return `${year}-${month}-${day}`
 }
 </script>
 
