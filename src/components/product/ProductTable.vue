@@ -34,7 +34,7 @@
       <template v-slot:body="props">
         <q-tr :props="props">
           <q-td v-for="col in visibleColumns" :key="col.name" :props="props">
-            <div v-if="col.name !== 'id'" title="Clique para editar">
+            <div v-if="col.name !== 'id' && col.name !== 'actions'" title="Clique para editar">
               <template v-if="col.name === 'price' || col.name === 'value'">
                 R$ {{ Number(props.row[col.field]).toFixed(2) }}
               </template>
@@ -57,8 +57,16 @@
                 />
               </q-popup-edit>
             </div>
-            <div v-else>
+            <div v-else-if="col.name === 'id'">
               {{ props.row[col.field] }}
+            </div>
+            <div v-else-if="col.name === 'actions'">
+              <q-btn
+                color="negative"
+                label="Excluir"
+                dense
+                @click="handleDelete('dataCompany', props.row.id)"
+              />
             </div>
           </q-td>
         </q-tr>
@@ -101,6 +109,7 @@
 </template>
 <script setup>
 import { ref, watch, computed } from 'vue'
+import { getLocalStorage, deleteData } from '../../utils/product-storage'
 
 const props = defineProps({
   rows: {
@@ -129,52 +138,42 @@ const filteredRowsCount = computed(() => {
   }).length
 })
 
-const dataModel = {
-  id: '',
-  name: '',
-  description: '',
-  amount: 0,
-  price: 0,
-  code: '',
-  category: '',
-  brand: '',
-  supplier: '',
-  expirationDate: '',
-  manufactureDate: '',
-  currentDate: '',
-}
-
-const fieldLabels = {
-  id: 'ID',
-  name: 'Nome',
-  description: 'Descrição',
-  amount: 'Quantidade',
-  price: 'Preço',
-  value: 'Valor',
-  code: 'Código',
-  category: 'Categoria',
-  brand: 'Marca',
-  supplier: 'Fornecedor',
-  expirationDate: 'Data Validade',
-  manufactureDate: 'Data Fabricação',
-  currentDate: 'Data Cadastro',
-}
-
-const allColumns = Object.keys(dataModel).map((key) => ({
-  name: key,
-  label: fieldLabels[key] || key,
-  align: 'left',
-  field: key,
-  sortable: true,
-}))
+const allColumns = [
+  { name: 'id', label: 'ID', field: 'id', align: 'left' },
+  { name: 'code', label: 'Código', field: 'code', align: 'left' },
+  { name: 'name', label: 'Nome', field: 'name', align: 'left' },
+  { name: 'price', label: 'Preço', field: 'price', align: 'right' },
+  { name: 'description', label: 'Descrição', field: 'description', align: 'left' },
+  { name: 'amount', label: 'Quantidade', field: 'amount', align: 'right' },
+  { name: 'category', label: 'Categoria', field: 'category', align: 'left' },
+  { name: 'brand', label: 'Marca', field: 'brand', align: 'left' },
+  { name: 'supplier', label: 'Fornecedor', field: 'supplier', align: 'left' },
+  { name: 'expirationDate', label: 'Data Validade', field: 'expirationDate', align: 'left' },
+  { name: 'manufactureDate', label: 'Data Fabricação', field: 'manufactureDate', align: 'left' },
+  { name: 'currentDate', label: 'Data Cadastro', field: 'currentDate', align: 'left' },
+  { name: 'actions', label: 'Ações', field: 'actions', align: 'center' },
+]
 
 const columnOptions = allColumns.map((col) => ({
   label: col.label,
   value: col.name,
 }))
 
-const visibleColumnNames = ref(allColumns.map((col) => col.name))
-
+const visibleColumnNames = ref([
+  'id',
+  'name',
+  'description',
+  'amount',
+  'price',
+  'code',
+  'category',
+  'brand',
+  'supplier',
+  'expirationDate',
+  'manufactureDate',
+  'currentDate',
+  'actions',
+])
 const visibleColumns = computed(() =>
   allColumns.filter((col) => visibleColumnNames.value.includes(col.name)),
 )
@@ -226,11 +225,13 @@ const editar = (id, field, value, scope) => {
     rowsData.value[index][field] = value
     if (field === 'price') {
       rowsData.value[index].value = value
-    } else if (field === 'value') {
-      rowsData.value[index].price = value
     }
     localStorage.setItem('dataCompany', JSON.stringify(rowsData.value))
     scope.set()
   }
+}
+const handleDelete = (key, id) => {
+  deleteData(key, id)
+  rowsData.value = getLocalStorage('dataCompany')
 }
 </script>
