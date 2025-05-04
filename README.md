@@ -1,40 +1,86 @@
-# Quasar App (cpid-frontend-test)
+# Sistema de Controle de Estoque
 
-A Quasar Project
+Este projeto foi desenvolvido como parte de um teste de habilidades em front-end, utilizando Vue.js e Quasar Framework.
 
-## Install the dependencies
+## Funcionalidades Principais
+
+1. **Gerenciamento de Produtos**
+
+   - Adicionar, editar e remover produtos.
+   - Informações do produto: código, nome, descrição, preço e quantidade inicial em estoque.
+
+2. **Controle de Movimentação de Estoque**
+
+   - Registro de entradas (compras, devoluções).
+   - Registro de saídas (vendas, vencimentos).
+   - Atualização automática do estoque.
+
+3. **Dashboard Interativa**
+   - Visualização gráfica das movimentações de estoque.
+   - Análise detalhada por produto.
+
+## Tecnologias Utilizadas
+
+- **Vue.js 3**: Framework progressivo para construção de interfaces de usuário.
+- **Quasar Framework**: Framework para desenvolvimento de aplicações responsivas e de alta performance.
+- **LocalStorage**: Persistência de dados diretamente no navegador.
+
+## Como Executar o Projeto
+
+### Pré-requisitos
+
+- **Node.js** (versão 16 ou superior).
+- **npm** (gerenciador de pacotes do Node.js).
+
+### Passos
+
+1. Clone o repositório:
+
+   ```bash
+   git clone https://github.com/DsBrito/cpid-frontend-test.git
+   ```
+
+2. Instale as dependências:
+
+   ```bash
+   cd cpid-frontend-test
+   npm install
+   ```
+
+3. Inicie o servidor de desenvolvimento:
+
+   ```bash
+   npm run dev
+   ```
+
+4. Acesse a aplicação no navegador:
+
+   ```bash
+   http://localhost:9000/
+   ```
+
+## Estrutura do Projeto
+
 ```bash
-yarn
-# or
-npm install
+src/
+├── assets/
+│   ├── files/       # Arquivos estáticos
+│   └── img/         # Imagens
+├── components/
+│   ├── home/        # Componentes da página inicial
+│   ├── movement/    # Componentes relacionados a movimentações
+│   └── product/     # Componentes relacionados a produtos
+├── layouts/         # Layouts principais da aplicação
+├── pages/           # Páginas da aplicação
+├── router/          # Configuração de rotas
+├── utils/           # Utilitários e funções auxiliares
 ```
 
-### Start the app in development mode (hot-code reloading, error reporting, etc.)
-```bash
-quasar dev
-```
+## Persistência de Dados
 
+Os dados são armazenados no **localStorage** do navegador com as seguintes chaves:
 
-### Lint the files
-```bash
-yarn lint
-# or
-npm run lint
-```
+- **dataProducts**: Lista de produtos cadastrados.
+- **dataMoviments**: Histórico de movimentações de estoque.
 
-
-### Format the files
-```bash
-yarn format
-# or
-npm run format
-```
-
-
-### Build the app for production
-```bash
-quasar build
-```
-
-### Customize the configuration
-See [Configuring quasar.config.js](https://v2.quasar.dev/quasar-cli-vite/quasar-config-js).
+> **Dica**: Para visualizar os dados armazenados, acesse o DevTools do navegador (F12) e navegue até a aba **Application > Local Storage**.
