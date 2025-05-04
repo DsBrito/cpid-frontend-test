@@ -1,6 +1,7 @@
 // Código retirado de: https://github.com/EstudosCpid/mini-curso-frontend-2025/blob/main/docs-mini-curso/util.js
 
 // Salva um value no localStorage com a chave key
+
 const saveLocalStorage = (key, value) => {
   localStorage.setItem(key, JSON.stringify(value))
 }

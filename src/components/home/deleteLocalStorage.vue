@@ -16,32 +16,25 @@
 
 <script setup>
 import { ref } from 'vue'
-import { Notify } from 'quasar'
 import { clearData } from 'src/utils/product-storage'
+import { showNotification } from 'src/utils/utils-functions'
 
 const isDelete = ref(false)
 
-const clearLoadData = async () => {
+const clearLoadData = () => {
   isDelete.value = true
   try {
     clearData('dataProducts')
     clearData('dataMoviments')
 
-    Notify.create({
-      type: 'positive',
-      message: 'Dados do Local Storage apagados com sucesso!',
-      timeout: 2000,
-      position: 'top',
-    })
+    showNotification('positive', 'Dados do Local Storage apagados com sucesso!')
   } catch (error) {
-    Notify.create({
-      type: 'negative',
-      message: `Erro ao apagar os dados: ${error.message || error}`,
-      timeout: 2000,
-      position: 'top',
-    })
-  } finally {
+    showNotification(
+      'negative',
+      `Erro ao apagar os dados: ${typeof error === 'object' && error.message ? error.message : 'Erro desconhecido'}`,
+    )
     isDelete.value = false
   }
+  isDelete.value = false
 }
 </script>

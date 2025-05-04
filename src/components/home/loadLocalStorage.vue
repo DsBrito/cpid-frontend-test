@@ -21,7 +21,7 @@
 </template>
 <script setup>
 import { ref } from 'vue'
-import { Notify } from 'quasar'
+import { showNotification, getCurrentDate } from 'src/utils/utils-functions'
 
 const isLoading = ref(false)
 const isSuccess = ref(false)
@@ -362,15 +362,7 @@ const exampleMovements = [
   },
 ]
 
-function getCurrentDate() {
-  const now = new Date()
-  const year = now.getFullYear()
-  const month = String(now.getMonth() + 1).padStart(2, '0')
-  const day = String(now.getDate()).padStart(2, '0')
-  return `${year}-${month}-${day}`
-}
-
-function loadDemoData() {
+const loadDemoData = () => {
   isLoading.value = true
 
   setTimeout(() => {
@@ -382,30 +374,14 @@ function loadDemoData() {
       localStorage.setItem('dataMoviments', JSON.stringify(exampleMovements))
 
       isSuccess.value = true
-
-      Notify.create({
-        color: 'positive',
-        textColor: 'white',
-        icon: 'check_circle',
-        message: `Dados de demonstração carregados! ${exampleProducts.length} produtos e ${exampleMovements.length} movimentações.`,
-        position: 'top',
-        timeout: 3000,
-      })
+      showNotification('positive', 'Dados de demonstração carregados!')
 
       setTimeout(() => {
         isSuccess.value = false
       }, 3000)
     } catch (error) {
       console.error('Erro ao carregar dados:', error)
-
-      Notify.create({
-        color: 'negative',
-        textColor: 'white',
-        icon: 'error',
-        message: `Erro ao carregar dados: ${error.message}`,
-        position: 'top',
-        timeout: 3000,
-      })
+      showNotification('negative', 'Erro ao carregar dados!')
     } finally {
       isLoading.value = false
     }

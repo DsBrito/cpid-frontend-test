@@ -48,7 +48,6 @@
             label="Tipo de Movimentação *"
             filled
             :rules="[(val) => !!val || 'Tipo de movimentação é obrigatório']"
-            @update:model-value="resetMotivo"
           />
         </div>
 
@@ -116,8 +115,8 @@
 
 <script setup>
 import { ref, computed, onMounted } from 'vue'
-import { Loading, Notify } from 'quasar'
-
+import { Loading } from 'quasar'
+import { showNotification, getCurrentDate } from 'src/utils/utils-functions'
 const emit = defineEmits(['dataUpdated'])
 const responsibleRef = ref(null)
 const productsCount = ref()
@@ -146,7 +145,7 @@ const reasonOptions = computed(() => {
   return []
 })
 
-function filterProducts(val, update) {
+const filterProducts = (val, update) => {
   const needle = val.toLowerCase()
 
   update(() => {
@@ -158,8 +157,7 @@ function filterProducts(val, update) {
   })
 }
 
-// Functions
-function loadProducts() {
+const loadProducts = () => {
   // Carrega os products do localStorage (da chave 'dataProducts' como usado no ProductForm)
   const productsArmazenados = localStorage.getItem('dataProducts')
   if (productsArmazenados) {
@@ -168,21 +166,7 @@ function loadProducts() {
   }
 }
 
-function getCurrentDate() {
-  // Retorna a data atual no formato YYYY-MM-DD para o input de data
-  const now = new Date()
-  const year = now.getFullYear()
-  const month = String(now.getMonth() + 1).padStart(2, '0')
-  const day = String(now.getDate()).padStart(2, '0')
-  return `${year}-${month}-${day}`
-}
-
-function resetMotivo() {
-  // Reseta o reason quando o type de movimentação muda
-  formData.value.reason = null
-}
-
-function resetForm() {
+const resetForm = () => {
   formData.value = {
     id: null,
     product: null,
@@ -200,7 +184,7 @@ function resetForm() {
   }
 }
 
-function validateAmount(amount) {
+const validateAmount = (amount) => {
   // Valida se há estoque suficiente para saída
   if (formData.value.type === 'Saída' && formData.value.product) {
     productsCount.value = formData.value.product.amount || 0
@@ -212,7 +196,7 @@ function validateAmount(amount) {
   return true
 }
 
-function onSubmit() {
+const onSubmit = () => {
   try {
     const movement = {
       id: Date.now(),
@@ -243,32 +227,19 @@ function onSubmit() {
 
     // Atualiza o estoque do product
     updateStockProduct(movement)
-
-    Notify.create({
-      color: 'positive',
-      textColor: 'white',
-      icon: 'check_circle',
-      message: 'Movimentação registrada com sucesso!',
-      position: 'top',
-      timeout: 2000,
-    })
+    showNotification('positive', 'Movimentação registrada com sucesso!')
 
     emit('dataUpdated')
     resetForm()
   } catch (error) {
-    Notify.create({
-      color: 'negative',
-      textColor: 'white',
-      icon: 'error',
-      message: `Erro ao registrar movimentação: ${error.message}`,
-      position: 'top',
-    })
+    console.error('Erro ao registrar movimentação:', error)
+    showNotification('negative', 'Erro ao registrar movimentação')
   } finally {
     Loading.hide()
   }
 }
 
-function updateStockProduct(movement) {
+const updateStockProduct = (movement) => {
   // Atualiza o estoque do product com base no type de movimentação
   const productsCopy = [...products.value]
   const productIndex = productsCopy.findIndex((p) => p.id === movement.productId)

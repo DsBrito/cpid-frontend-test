@@ -3,6 +3,7 @@
     <div class="text-h5 q-mb-md">Cadastro de Produtos no Estoque</div>
     <q-form @submit.prevent="onSubmit" @reset="onReset" class="q-gutter-md">
       <div class="row q-col-gutter-sm">
+        <!-- Nome do Produto -->
         <div class="col-12">
           <q-input
             v-model="formData.name"
@@ -13,10 +14,12 @@
           />
         </div>
 
+        <!-- Código do Produto -->
         <div class="col-12 col-md-4">
           <q-input v-model="formData.code" label="Código " filled disable readonly />
         </div>
 
+        <!-- Quantidade do Produto -->
         <div class="col-12 col-md-4">
           <q-input
             v-model.number="formData.amount"
@@ -30,6 +33,7 @@
           />
         </div>
 
+        <!-- Preço do Produto -->
         <div class="col-12 col-md-4">
           <q-input
             v-model.number="formData.price"
@@ -44,6 +48,7 @@
           />
         </div>
 
+        <!-- Categoria do Produto -->
         <div class="col-12 col-md-4">
           <q-select
             v-model="formData.category"
@@ -55,13 +60,18 @@
             :rules="[(val) => !!val || 'Categoria é obrigatória']"
           />
         </div>
+
+        <!-- Marca do Produto -->
         <div class="col-12 col-md-4">
           <q-input v-model="formData.brand" label="Marca" filled />
         </div>
 
+        <!-- Fornecedor do Produto -->
         <div class="col-12 col-md-4">
           <q-input v-model="formData.supplier" label="Fornecedor" filled />
         </div>
+
+        <!-- Data de Corrente -->
         <div class="col-12 col-md-4">
           <q-input
             v-model="formData.currentDate"
@@ -72,6 +82,8 @@
             readonly
           />
         </div>
+
+        <!-- Data de Fabricação -->
         <div class="col-12 col-md-4">
           <q-input
             v-model="formData.manufactureDate"
@@ -88,10 +100,12 @@
           />
         </div>
 
+        <!-- Data de Validade -->
         <div class="col-12 col-md-4">
           <q-input v-model="formData.expirationDate" label="Data de Validade" type="date" filled />
         </div>
 
+        <!-- Descrição do Produto -->
         <div class="col-12">
           <q-input
             v-model="formData.description"
@@ -116,7 +130,8 @@
 <script setup>
 import { addNewData } from '../../utils/product-storage'
 import { ref } from 'vue'
-import { Loading, Notify, QSpinnerGears } from 'quasar'
+import { Loading, QSpinnerGears } from 'quasar'
+import { showNotification, getCurrentDate } from 'src/utils/utils-functions'
 
 const emit = defineEmits(['dataUpdated'])
 const nameRef = ref(null)
@@ -165,25 +180,13 @@ const onSubmit = () => {
       spinner: QSpinnerGears,
       spinnerColor: 'white',
     })
-    // Mostra mensagem de sucesso
-    Notify.create({
-      color: 'positive',
-      textColor: 'white',
-      icon: 'check_circle',
-      message: 'Produto cadastrado com sucesso!',
-      position: 'top',
-      timeout: 2000,
-    })
+
+    showNotification('positive', 'Produto cadastrado com sucesso!')
 
     onReset()
   } catch (error) {
-    Notify.create({
-      color: 'negative',
-      textColor: 'white',
-      icon: 'error',
-      message: `Erro ao cadastrar produto: ${error.message}`,
-      position: 'top',
-    })
+    console.log('Erro ao cadastrar produto:', error)
+    showNotification('negative', 'Erro ao cadastrar produto!')
   } finally {
     Loading.hide()
   }
@@ -208,15 +211,6 @@ const onReset = () => {
   if (nameRef.value) {
     nameRef.value.focus()
   }
-}
-
-function getCurrentDate() {
-  // Retorna a data atual no formato YYYY-MM-DD para o input de data
-  const now = new Date()
-  const year = now.getFullYear()
-  const month = String(now.getMonth() + 1).padStart(2, '0')
-  const day = String(now.getDate()).padStart(2, '0')
-  return `${year}-${month}-${day}`
 }
 </script>
 

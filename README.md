@@ -53,7 +53,7 @@ Este projeto foi desenvolvido como parte de um teste de habilidades em front-end
    npm run dev
    ```
 
-4. Acesse a aplicação no navegador:
+4. Acesse a aplicação no navegador (Ele irá abrir na porta 9000 ou alguma próxima):
 
    ```bash
    http://localhost:9000/
@@ -64,16 +64,35 @@ Este projeto foi desenvolvido como parte de um teste de habilidades em front-end
 ```bash
 src/
 ├── assets/
-│   ├── files/       # Arquivos estáticos
-│   └── img/         # Imagens
+│   └── files/
+│       └── ...
+│   └── img/
+│       └── ...
 ├── components/
-│   ├── home/        # Componentes da página inicial
-│   ├── movement/    # Componentes relacionados a movimentações
-│   └── product/     # Componentes relacionados a produtos
-├── layouts/         # Layouts principais da aplicação
-├── pages/           # Páginas da aplicação
-├── router/          # Configuração de rotas
-├── utils/           # Utilitários e funções auxiliares
+│   └── home/
+│       ├── deleteLocalStorage.vue
+│       ├── loadLocalStorage.vue
+│       └── NavigationState.vue
+│   └── movement/
+│       ├── MovementForm.vue
+│       └── MovementTable.vue
+│   └── product/
+│       ├── ProductForm.vue
+│       └── ProductTable.vue
+├── layouts/
+│   ├── MainLayout.vue
+│   └── NoLayout.vue
+├── pages/
+│   ├── DashboardPage.vue
+│   ├── ErrorNotFound.vue
+│   ├── HomePage.vue
+│   ├── MovementPage.vue
+│   └──ProductPage.vue
+├── router/
+│   └── routes.js
+├── utils/
+│   ├── product-storage.js
+└── └── utils-functions.js
 ```
 
 ## Persistência de Dados
@@ -84,3 +103,10 @@ Os dados são armazenados no **localStorage** do navegador com as seguintes chav
 - **dataMoviments**: Histórico de movimentações de estoque.
 
 > **Dica**: Para visualizar os dados armazenados, acesse o DevTools do navegador (F12) e navegue até a aba **Application > Local Storage**.
+
+## Links Utilizados
+
+- **[Material Icons](https://fonts.google.com/icons)**: Biblioteca de ícones para usar com o Google Fonts.
+- **[Vue](https://echarts.apache.org/examples/en/)**: Framework Javascript de código aberto.
+- **[Quasar](https://quasar.dev/)**: Framework para Vue.js que facilita o desenvolvimento de aplicações responsivas com uma única base de código.
+- **[ECharts (Apache)](https://echarts.apache.org/examples/en/)**: Biblioteca de gráficos interativos para visualização de dados, compatível com Vue.js.
