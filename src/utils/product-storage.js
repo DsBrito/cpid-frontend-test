@@ -45,4 +45,8 @@ const deleteData = (key, id) => {
   saveLocalStorage(key, dataStorage)
 }
 
-export { saveLocalStorage, getLocalStorage, addNewData, editData, deleteData }
+const clearData = (key) => {
+  saveLocalStorage(key, [])
+}
+
+export { saveLocalStorage, getLocalStorage, addNewData, editData, deleteData, clearData }
