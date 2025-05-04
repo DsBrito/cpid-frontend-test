@@ -158,7 +158,7 @@ const onSubmit = () => {
       expirationDate: formData.value.expirationDate,
       currentDate: formData.value.currentDate,
     }
-    addNewData('dataCompany', data)
+    addNewData('dataProducts', data)
     emit('dataUpdated')
     Loading.show({
       message: 'Cadastrando produto...',

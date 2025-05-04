@@ -445,14 +445,14 @@ const topProductsChartOption = ref({
 // Carregar dados de produtos e movimentações
 const loadData = () => {
   // Carregar produtos do localStorage
-  const productsData = localStorage.getItem('dataCompany')
+  const productsData = localStorage.getItem('dataProducts')
   if (productsData) {
     products.value = JSON.parse(productsData)
     totalProducts.value = products.value.length
   }
 
   // Carregar movimentações do localStorage
-  const movementsData = localStorage.getItem('movements')
+  const movementsData = localStorage.getItem('dataMoviments')
   if (movementsData) {
     movements.value = JSON.parse(movementsData)
   }
@@ -628,7 +628,7 @@ const parseDateRange = () => {
 // Observer para detectar mudanças no localStorage
 const createStorageObserver = () => {
   window.addEventListener('storage', (event) => {
-    if (event.key === 'dataCompany' || event.key === 'movements') {
+    if (event.key === 'dataProducts' || event.key === 'movements') {
       loadData()
     }
   })

@@ -2,6 +2,7 @@ export const ROUTE_NAMES = {
   home: 'home',
   product: 'product',
   movement: 'movement',
+  dashboard: 'dashboard',
 }
 
 export const ROTAS = {
@@ -23,6 +24,11 @@ export const ROTAS = {
         path: 'movement',
         name: ROUTE_NAMES.movement,
         component: () => import('../pages/MovementPage.vue'),
+      },
+      {
+        path: 'dashboard',
+        name: ROUTE_NAMES.dashboard,
+        component: () => import('../pages/DashboardPage.vue'),
       },
     ],
   },

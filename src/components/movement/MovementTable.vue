@@ -194,7 +194,7 @@ const getRowColor = (type) => {
 const loadMovements = () => {
   loading.value = true
   try {
-    const movementsStored = localStorage.getItem('movements')
+    const movementsStored = localStorage.getItem('dataMoviments')
     if (movementsStored) {
       movements.value = JSON.parse(movementsStored)
     }

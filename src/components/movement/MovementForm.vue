@@ -135,7 +135,7 @@ const formData = ref({
 const products = ref([])
 const filteredProducts = ref([])
 const reasonsIn = ['Compra', 'Devolução']
-const reasonsOut = ['Venda', 'Vencimento', 'Perda']
+const reasonsOut = ['Venda', 'Vencimento']
 
 const reasonOptions = computed(() => {
   if (formData.value.type === 'Entrada') {
@@ -160,8 +160,8 @@ function filterProducts(val, update) {
 
 // Functions
 function loadProducts() {
-  // Carrega os products do localStorage (da chave 'dataCompany' como usado no ProductForm)
-  const productsArmazenados = localStorage.getItem('dataCompany')
+  // Carrega os products do localStorage (da chave 'dataProducts' como usado no ProductForm)
+  const productsArmazenados = localStorage.getItem('dataProducts')
   if (productsArmazenados) {
     products.value = JSON.parse(productsArmazenados)
     filteredProducts.value = products.value
@@ -228,7 +228,7 @@ function onSubmit() {
     }
 
     // Busca movimentações existentes ou inicia array vazio
-    const movementsStored = localStorage.getItem('movements')
+    const movementsStored = localStorage.getItem('dataMoviments')
     let movements = []
 
     if (movementsStored) {
@@ -239,7 +239,7 @@ function onSubmit() {
     movements.push(movement)
 
     // Salva no localStorage
-    localStorage.setItem('movements', JSON.stringify(movements))
+    localStorage.setItem('dataMoviments', JSON.stringify(movements))
 
     // Atualiza o estoque do product
     updateStockProduct(movement)
@@ -280,7 +280,7 @@ function updateStockProduct(movement) {
     }
 
     // Atualiza o localStorage de products (a amount em estoque)
-    localStorage.setItem('dataCompany', JSON.stringify(productsCopy))
+    localStorage.setItem('dataProducts', JSON.stringify(productsCopy))
 
     // Atualiza a lista de products atual
     products.value = productsCopy

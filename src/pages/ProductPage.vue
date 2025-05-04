@@ -41,11 +41,11 @@ import TableComponent from '../components/product/ProductTable.vue'
 import { getLocalStorage } from '../utils/product-storage'
 import { ref } from 'vue'
 
-const rows = ref(getLocalStorage('dataCompany'))
+const rows = ref(getLocalStorage('dataProducts'))
 const dialogVisible = ref(false)
 
 const updateTableData = () => {
-  rows.value = getLocalStorage('dataCompany')
+  rows.value = getLocalStorage('dataProducts')
 }
 </script>
 

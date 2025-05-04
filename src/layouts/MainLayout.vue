@@ -77,6 +77,11 @@ const aboutMeList = [
     icon: 'photo_camera',
     link: 'https://www.instagram.com/dssbrito/',
   },
+  {
+    title: 'Código do Projeto',
+    icon: 'source',
+    link: 'https://github.com/DsBrito/cpid-frontend-test',
+  },
 ]
 
 const navigationPages = [

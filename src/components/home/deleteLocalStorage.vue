@@ -24,8 +24,8 @@ const isDelete = ref(false)
 const clearLoadData = async () => {
   isDelete.value = true
   try {
-    clearData('dataCompany')
-    clearData('movements')
+    clearData('dataProducts')
+    clearData('dataMoviments')
 
     Notify.create({
       type: 'positive',

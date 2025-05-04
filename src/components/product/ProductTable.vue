@@ -65,7 +65,7 @@
                 color="negative"
                 label="Excluir"
                 dense
-                @click="handleDelete('dataCompany', props.row.id)"
+                @click="handleDelete('dataProducts', props.row.id)"
               />
             </div>
           </q-td>
@@ -226,12 +226,12 @@ const editar = (id, field, value, scope) => {
     if (field === 'price') {
       rowsData.value[index].value = value
     }
-    localStorage.setItem('dataCompany', JSON.stringify(rowsData.value))
+    localStorage.setItem('dataProducts', JSON.stringify(rowsData.value))
     scope.set()
   }
 }
 const handleDelete = (key, id) => {
   deleteData(key, id)
-  rowsData.value = getLocalStorage('dataCompany')
+  rowsData.value = getLocalStorage('dataProducts')
 }
 </script>

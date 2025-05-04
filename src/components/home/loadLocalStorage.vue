@@ -376,10 +376,10 @@ function loadDemoData() {
   setTimeout(() => {
     try {
       // Salvar os produtos no localStorage
-      localStorage.setItem('dataCompany', JSON.stringify(exampleProducts))
+      localStorage.setItem('dataProducts', JSON.stringify(exampleProducts))
 
       // Salvar as movimentações no localStorage
-      localStorage.setItem('movements', JSON.stringify(exampleMovements))
+      localStorage.setItem('dataMoviments', JSON.stringify(exampleMovements))
 
       isSuccess.value = true
 
