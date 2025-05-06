@@ -1,6 +1,6 @@
 # Sistema de Controle de Estoque
 
-Este projeto foi desenvolvido como parte de um teste de habilidades em front-end, utilizando Vue.js e Quasar Framework.
+Este projeto foi desenvolvido como parte de um teste de habilidades em front-end, utilizando Vue.js e Quasar Framework, e se encontra oline em: https://dsbrito.github.io/cpid-frontend-test/#/
 
 ## Funcionalidades Principais
 
