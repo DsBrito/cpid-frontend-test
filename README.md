@@ -110,3 +110,7 @@ Os dados são armazenados no **localStorage** do navegador com as seguintes chav
 - **[Vue](https://echarts.apache.org/examples/en/)**: Framework Javascript de código aberto.
 - **[Quasar](https://quasar.dev/)**: Framework para Vue.js que facilita o desenvolvimento de aplicações responsivas com uma única base de código.
 - **[ECharts (Apache)](https://echarts.apache.org/examples/en/)**: Biblioteca de gráficos interativos para visualização de dados, compatível com Vue.js.
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/6df59905-28c9-4627-b050-7962faae8840" width="800" alt="Imagem de exemplo">
+</p>
